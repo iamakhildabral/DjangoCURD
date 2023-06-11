@@ -16,6 +16,9 @@ class Company(models.Model):
     added_date = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.name
+
 
 # Employee Model
 class Employee(models.Model):
@@ -28,4 +31,4 @@ class Employee(models.Model):
                                                         ('Django Developer', 'Developer'),
                                                         ('Project Leader', 'Leader')))
 
-    company=models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
