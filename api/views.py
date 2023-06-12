@@ -18,10 +18,17 @@ class CompanyViewSet(viewsets.ModelViewSet):
     def employees(self, request, pk=None):
         # First  getting the company id for which we'll be showing the records
         company = Company.objects.get(pk=pk)
-        # now moving to the employees which matches with the company id in the employeed record
-        employee = Employee.objects.filter(company=company)
-        emp_serializer = EmployeeSerializers(employee,many=True,context={'request':request})
-        return Response(emp_serializer.data)
+        # now moving to the employees which matches with the company id in the employees record
+        try:
+            employee = Employee.objects.filter(company=company)
+            emp_serializer = EmployeeSerializers(employee,many=True,context={'request':request})
+            return Response(emp_serializer.data)
+        except Exception as e:
+            return Response(
+                {
+                    'message': 'Companies does not exist for this id',
+                }
+            )
 
 
 # creating views for the employee
